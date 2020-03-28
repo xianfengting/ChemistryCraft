@@ -1,0 +1,16 @@
+
+# Items
+item.chemistrycraft.copper_ingot.name=铜锭
+item.chemistrycraft.stone_hammer.name=石锤
+
+# Blocks
+tile.chemistrycraft.iron_furnace.name=铁炉
+tile.chemistrycraft.steam_generator.name=蒸汽机
+tile.fluid_steam.name=蒸汽
+tile.chemistrycraft.ore.copper.name=铜矿石
+
+# GUI
+gui.chemistrycraft.tooltip.fuel_time=燃料时间: %0$d/%1$d
+
+# Fluids
+fluid.steam=蒸汽

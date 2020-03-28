@@ -1,0 +1,16 @@
+
+# Items
+item.chemistrycraft.copper_ingot.name=Copper Ingot
+item.chemistrycraft.stone_hammer.name=Stone Hammer
+
+# Blocks
+tile.chemistrycraft.iron_furnace.name=Iron Furnace
+tile.chemistrycraft.steam_generator.name=Steam Generator
+tile.fluid_steam.name=Steam
+tile.chemistrycraft.ore.copper.name=Copper Ore
+
+# GUI
+gui.chemistrycraft.tooltip.fuel_time=Fuel Time: %0$d/%1$d
+
+# Fluids
+fluid.steam=Steam

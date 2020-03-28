@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "type=copper": { "model": "chemistrycraft:copper_ore" }
+  }
+}

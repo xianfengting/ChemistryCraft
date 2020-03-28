@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "chemistrycraft:blocks/steam_generator_side",
+    "front": "chemistrycraft:blocks/steam_generator",
+    "side": "chemistrycraft:blocks/steam_generator_side"
+  }
+}

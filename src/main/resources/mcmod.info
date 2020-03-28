@@ -1,0 +1,16 @@
+[
+{
+  "modid": "chemistrycraft",
+  "name": "Chemistry Craft",
+  "description": "Brings chemistry to MC.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["xianfengting"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

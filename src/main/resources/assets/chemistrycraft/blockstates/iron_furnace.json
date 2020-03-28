@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "burning=false,facing=east": { "model": "chemistrycraft:iron_furnace", "y": 90, "uvlock": true },
+    "burning=true,facing=east": { "model": "chemistrycraft:iron_furnace_burning", "y": 90, "uvlock": true },
+    "burning=false,facing=north": { "model": "chemistrycraft:iron_furnace" },
+    "burning=true,facing=north": { "model": "chemistrycraft:iron_furnace_burning" },
+    "burning=false,facing=south": { "model": "chemistrycraft:iron_furnace", "y": 180, "uvlock": true },
+    "burning=true,facing=south": { "model": "chemistrycraft:iron_furnace_burning", "y": 180, "uvlock": true },
+    "burning=false,facing=west": { "model": "chemistrycraft:iron_furnace", "y": 270, "uvlock": true },
+    "burning=true,facing=west": { "model": "chemistrycraft:iron_furnace_burning", "y": 270, "uvlock": true }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=east,working=false": { "model": "chemistrycraft:steam_generator", "y": 90, "uvlock": true },
+    "facing=east,working=true": { "model": "chemistrycraft:steam_generator_working", "y": 90, "uvlock": true },
+    "facing=north,working=false": { "model": "chemistrycraft:steam_generator" },
+    "facing=north,working=true": { "model": "chemistrycraft:steam_generator_working" },
+    "facing=south,working=false": { "model": "chemistrycraft:steam_generator", "y": 180, "uvlock": true },
+    "facing=south,working=true": { "model": "chemistrycraft:steam_generator_working", "y": 180, "uvlock": true },
+    "facing=west,working=false": { "model": "chemistrycraft:steam_generator", "y": 270, "uvlock": true },
+    "facing=west,working=true": { "model": "chemistrycraft:steam_generator_working", "y": 270, "uvlock": true }
+  }
+}
