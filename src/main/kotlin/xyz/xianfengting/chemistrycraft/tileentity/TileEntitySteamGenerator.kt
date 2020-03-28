@@ -45,8 +45,8 @@ import xyz.xianfengting.chemistrycraft.init.CCFluids
 class TileEntitySteamGenerator : TileEntity(), ITickable {
     private val upInventory = FluidTank(FluidRegistry.WATER, 0, 8000)
     private val downInventory = FluidTank(CCFluids.STEAM, 0, 8000)
-    private val fuelInventory = ItemStackHandler(3)
-    private val fuelResultInventory = ItemStackHandler()
+    private val inputInventory = ItemStackHandler(3)
+    private val outputInventory = ItemStackHandler(3)
     var genProgress = 0
         private set
     val totalGenProgress = 100
@@ -73,8 +73,8 @@ class TileEntitySteamGenerator : TileEntity(), ITickable {
         when (capability) {
             CapabilityItemHandler.ITEM_HANDLER_CAPABILITY -> {
                 val inventory: Any = when (facing) {
-                    EnumFacing.DOWN -> fuelResultInventory
-                    else -> fuelInventory
+                    EnumFacing.DOWN -> outputInventory
+                    else -> inputInventory
                 }
                 @Suppress("UNCHECKED_CAST")
                 return inventory as T
@@ -97,8 +97,8 @@ class TileEntitySteamGenerator : TileEntity(), ITickable {
         val downInventoryCompound = compound.getCompoundTag("DownInventory")
         this.upInventory.readFromNBT(upInventoryCompound)
         this.downInventory.readFromNBT(downInventoryCompound)
-        this.fuelInventory.deserializeNBT(compound.getCompoundTag("FuelInventory"))
-        this.fuelResultInventory.deserializeNBT(compound.getCompoundTag("FuelResultInventory"))
+        this.inputInventory.deserializeNBT(compound.getCompoundTag("InputInventory"))
+        this.outputInventory.deserializeNBT(compound.getCompoundTag("OutputInventory"))
         this.genProgress = compound.getInteger("GenProgress")
         this.fuelTime = compound.getInteger("FuelTime")
         this.totalFuelTime = compound.getInteger("TotalFuelTime")
@@ -113,8 +113,8 @@ class TileEntitySteamGenerator : TileEntity(), ITickable {
         downInventoryCompound = this.downInventory.writeToNBT(downInventoryCompound)
         compoundObj.setTag("UpInventory", upInventoryCompound)
         compoundObj.setTag("DownInventory", downInventoryCompound)
-        compoundObj.setTag("FuelInventory", this.fuelInventory.serializeNBT())
-        compoundObj.setTag("FuelResultInventory", this.fuelResultInventory.serializeNBT())
+        compoundObj.setTag("InputInventory", this.inputInventory.serializeNBT())
+        compoundObj.setTag("OutputInventory", this.outputInventory.serializeNBT())
         compoundObj.setInteger("GenProgress", this.genProgress)
         compoundObj.setInteger("FuelTime", this.fuelTime)
         compoundObj.setInteger("TotalFuelTime", this.totalFuelTime)
@@ -144,7 +144,7 @@ class TileEntitySteamGenerator : TileEntity(), ITickable {
             val canBurn = true
             run {
                 if (fuelTime == 0) {
-                    val fuel = fuelInventory.extractItem(0, 1, true)
+                    val fuel = inputInventory.extractItem(0, 1, true)
                     if (fuel != ItemStack.EMPTY && TileEntityFurnace.isItemFuel(fuel) && canBurn) {
                         val temp = TileEntityIronFurnace.getFuelTime(fuel)
                         totalFuelTime = temp
@@ -152,11 +152,11 @@ class TileEntitySteamGenerator : TileEntity(), ITickable {
                         if (fuel.item == Items.LAVA_BUCKET) {
                             val emptyBucket = ItemStack(Items.BUCKET, 1)
 //                            if (downInventory.insertItem(1, emptyBucket, true) != ItemStack.EMPTY) {
-                            fuelInventory.extractItem(0, 1, false)
-                            fuelResultInventory.insertItem(0, emptyBucket, false)
+                            inputInventory.extractItem(0, 1, false)
+                            outputInventory.insertItem(0, emptyBucket, false)
 //                            }
                         } else {
-                            fuelInventory.extractItem(0, 1, false)
+                            inputInventory.extractItem(0, 1, false)
                         }
                         world.setBlockState(pos, state.withProperty(BlockSteamGenerator.WORKING, true))
                         markDirty()
@@ -184,10 +184,10 @@ class TileEntitySteamGenerator : TileEntity(), ITickable {
                 }
             }
             run {
-                val waterInput = fuelInventory.extractItem(1, 1, true)
+                val waterInput = inputInventory.extractItem(1, 1, true)
                 if (waterInput != ItemStack.EMPTY) {
                     if (waterInput.item == Items.WATER_BUCKET && upInventory.fluidAmount <= upInventory.capacity - 1000) {
-                        fuelInventory.extractItem(1, 1, false)
+                        inputInventory.extractItem(1, 1, false)
                         upInventory.fill(FluidStack(FluidRegistry.WATER, 1000), true)
                         // TODO: Return the empty bucket
                     }

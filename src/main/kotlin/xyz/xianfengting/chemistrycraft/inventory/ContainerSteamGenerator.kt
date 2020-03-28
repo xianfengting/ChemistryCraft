@@ -35,8 +35,8 @@ class ContainerSteamGenerator(player: EntityPlayer, tileEntity: TileEntity) : Co
         get() = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)
     internal val downFluid
         get() = tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)
-    private val fuelItems = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH)
-    private val fuelResultItems = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)
+    private val inputItems = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH)
+    private val outputItems = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)
     private val tileEntity = tileEntity as TileEntitySteamGenerator
     var genProgress = 0
         private set
@@ -56,28 +56,34 @@ class ContainerSteamGenerator(player: EntityPlayer, tileEntity: TileEntity) : Co
         private set
 
     init {
-        // 0 ~ 3
-        addSlotToContainer(object : SlotItemHandler(fuelItems, 0, 8, 53) {
+        // 0 ~ 5
+        addSlotToContainer(object : SlotItemHandler(inputItems, 0, 8, 53) {
             override fun isItemValid(stack: ItemStack) = super.isItemValid(stack) // TODO
         })
-        addSlotToContainer(object : SlotItemHandler(fuelResultItems, 0, 26, 53) {
+        addSlotToContainer(object : SlotItemHandler(outputItems, 0, 26, 53) {
             override fun isItemValid(stack: ItemStack) = false
         })
-        addSlotToContainer(object : SlotItemHandler(fuelItems, 1, 32, 16) {
+        addSlotToContainer(object : SlotItemHandler(inputItems, 1, 32, 16) {
             override fun isItemValid(stack: ItemStack) = super.isItemValid(stack) // TODO
         })
-        addSlotToContainer(object : SlotItemHandler(fuelItems, 2, 127, 16) {
+        addSlotToContainer(object : SlotItemHandler(outputItems, 1, 32, 34) {
+            override fun isItemValid(stack: ItemStack) = false
+        })
+        addSlotToContainer(object : SlotItemHandler(inputItems, 2, 127, 16) {
             override fun isItemValid(stack: ItemStack) = super.isItemValid(stack) // TODO
+        })
+        addSlotToContainer(object : SlotItemHandler(outputItems, 2, 127, 34) {
+            override fun isItemValid(stack: ItemStack) = false
         })
 
-        // 4 ~ 30
+        // 6 ~ 32
         for (i in 0..2) {
             for (j in 0..8) {
                 addSlotToContainer(Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 74 + i * 18))
             }
         }
 
-        // 31 ~ 39
+        // 33 ~ 41
         for (i in 0..8) {
             addSlotToContainer(Slot(player.inventory, i, 8 + i * 18, 132))
         }
@@ -96,11 +102,11 @@ class ContainerSteamGenerator(player: EntityPlayer, tileEntity: TileEntity) : Co
         var isMerged = false
 
         when (index) {
-            in 0..3 -> isMerged = mergeItemStack(newStack, 4, 39, true)
-            in 4..30 -> isMerged = mergeItemStack(newStack, 0, 3, false)
-                    || mergeItemStack(newStack, 31, 39, false)
-            in 31..39 -> isMerged = mergeItemStack(newStack, 0, 3, false)
-                    || mergeItemStack(newStack, 4, 30, false)
+            in 0..5 -> isMerged = mergeItemStack(newStack, 6, 41, true)
+            in 6..32 -> isMerged = mergeItemStack(newStack, 0, 5, false)
+                    || mergeItemStack(newStack, 33, 41, false)
+            in 33..41 -> isMerged = mergeItemStack(newStack, 0, 5, false)
+                    || mergeItemStack(newStack, 6, 32, false)
         }
 
         if (!isMerged) {
